@@ -16,9 +16,11 @@ function createWindow () {
         mainWindow = null;
     });
 
-    mainWindow.once('ready-to-show', () => {
-        autoUpdater.checkForUpdatesAndNotify();
-    });
+    autoUpdater.checkForUpdatesAndNotify()
+
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.send('version', app.getVersion())
+    })
 }
 
 app.on('ready', () => {

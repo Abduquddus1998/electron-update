@@ -15,6 +15,14 @@
     "type" : "git",
     "url" : "https://github.com/Abduquddus1998/electron-update.git"
   },
+  "build": {
+    "appId": "com.applyhead.pingo",
+    "productName": "electron-update-app",
+    "copyright": "Copyright © year Sandeep Acharya",
+    "publish": [
+      "github"
+    ]
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
