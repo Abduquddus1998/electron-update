@@ -1,0 +1,24 @@
+{
+  "name": "electron-update-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "author": "",
+  "devDependencies": {
+    "electron": "^23.1.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-updater": "^5.3.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Abduquddus1998/electron-update.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder build  --win --publish never",
+    "deploy": "electron-builder build  --win --publish always"
+  }
+}
