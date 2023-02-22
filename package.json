@@ -1,6 +1,6 @@
 {
   "name": "electron-update-app",
-  "version": "1.1.8",
+  "version": "1.1.89",
   "main": "main.js",
   "homepage": "./",
   "description": "electron-updater example project",
@@ -24,7 +24,7 @@
         "provider": "github",
         "owner": "Abduquddus1998",
         "repo": "electron-update",
-        "token": "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"
+        "token": "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"
       }
     ]
   },
