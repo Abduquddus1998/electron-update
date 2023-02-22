@@ -1,6 +1,6 @@
 {
   "name": "electron-update-app",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "main.js",
   "license": "MIT",
   "author": "Abdukuddus",
@@ -18,13 +18,11 @@
     "url": "https://github.com/Abduquddus1998/electron-update.git"
   },
   "build": {
-    "appId": "com.github.abduquddus.electronupdate",
-    "productName": "Simple Electron App",
     "publish": [{
       "provider": "github",
       "owner": "Abduquddus1998",
       "repo": "electron-update",
-      "token": "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"
+      "token": "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"
     }]
   },
   "scripts": {
