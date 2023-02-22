@@ -134,7 +134,7 @@ function createDefaultWindow() {
     win.on('closed', () => {
         win = null;
     });
-    win.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
+    win.loadFile(`index.html`);
     return win;
 }
 
@@ -157,6 +157,7 @@ autoUpdater.on('download-progress', (progressObj) => {
     sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.quitAndInstall();
     sendStatusToWindow('Update downloaded');
 });
 
