@@ -16,9 +16,11 @@ function createWindow () {
     autoUpdater.checkForUpdates();
 }
 
-app.on('ready', () => {
+app.whenReady().then(() => {
     createWindow();
-});
+
+    if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates();
+})
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
@@ -32,8 +34,7 @@ app.on('activate', function () {
     }
 });
 
-autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
-
+autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
     const dialogOpts = {
         type: 'info',
         buttons: ['Ok'],
@@ -44,26 +45,23 @@ autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
     dialog.showMessageBox(dialogOpts);
 });
 
-autoUpdater.on('download-progress', (progressObj) => {
-    let log_message = "Download speed: " + progressObj.bytesPerSecond;
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+// autoUpdater.on('download-progress', (progressObj) => {
+//     let log_message = "Download speed: " + progressObj.bytesPerSecond;
+//     log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+//     log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+//
+//     const dialogOpts = {
+//         type: 'info',
+//         buttons: ['Ok'],
+//         title: 'download-progress',
+//         message: "message",
+//         detail: log_message
+//     };
+//
+//     dialog.showMessageBox(dialogOpts);
+// })
 
-    const dialogOpts = {
-        type: 'info',
-        buttons: ['Ok'],
-        title: 'download-progress',
-        message: "message",
-        detail: log_message
-    };
-
-    dialog.showMessageBox(dialogOpts);
-})
-
-autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
-    // log.info('update-downloaded', releaseNotes, releaseName, _event);
-    // sendStatusToWindow('Update downloaded sendStatusToWindow');
-
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const dialogOpts = {
         type: 'info',
         buttons: ['Restart', 'Later'],
@@ -74,12 +72,8 @@ autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        console.log("returnValue", returnValue)
         autoUpdater.quitAndInstall()
-
-        if (returnValue.response === 0) {
-            console.log('return value', returnValue);
-        }
     })
-
-});
+})
 
