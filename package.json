@@ -1,6 +1,6 @@
 {
   "name": "electron-update-app",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "main": "main.js",
   "license": "MIT",
   "author": "",
@@ -14,14 +14,6 @@
   "repository": {
     "type" : "git",
     "url" : "https://github.com/Abduquddus1998/electron-update.git"
-  },
-  "build": {
-    "appId": "com.applyhead.pingo",
-    "productName": "electron-update-app",
-    "copyright": "Copyright © year Sandeep Acharya",
-    "publish": [
-      "github"
-    ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

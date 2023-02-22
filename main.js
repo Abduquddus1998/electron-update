@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog} = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 let mainWindow;
@@ -16,7 +16,7 @@ function createWindow () {
         mainWindow = null;
     });
 
-    autoUpdater.checkForUpdatesAndNotify()
+    autoUpdater.checkForUpdates();
 
     mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.webContents.send('version', app.getVersion())
@@ -43,12 +43,36 @@ ipcMain.on('app_version', (event) => {
     event.sender.send('app_version', { version: app.getVersion() });
 });
 
-autoUpdater.on('update-available', () => {
+autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
     mainWindow.webContents.send('update_available');
+    const dialogOpts = {
+        type: 'info',
+        buttons: ['Ok'],
+        title: 'Update Available',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version download started. The app will be restarted to install the update.'
+    };
+    dialog.showMessageBox(dialogOpts);
 });
 
 autoUpdater.on('update-downloaded', () => {
     mainWindow.webContents.send('update_downloaded');
+    const dialogOpts = {
+        type: 'info',
+        buttons: ['Restart', 'Later'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail:
+            'A new version has been downloaded. Restart the application to apply the updates.',
+    }
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        autoUpdater.quitAndInstall()
+        if (returnValue.response === 0) {
+            console.log('return value', returnValue);
+        }
+    })
+
 });
 
 ipcMain.on('restart_app', () => {
