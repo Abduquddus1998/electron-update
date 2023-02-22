@@ -2,6 +2,7 @@
   "name": "electron-update-app",
   "version": "1.0.9",
   "main": "main.js",
+  "homepage": "./",
   "description": "electron-updater example project",
   "license": "MIT",
   "author": "Abdukuddus",
@@ -22,8 +23,7 @@
       {
         "provider": "github",
         "owner": "Abduquddus1998",
-        "repo": "electron-update",
-        "token": "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"
+        "repo": "electron-update"
       }
     ]
   },
