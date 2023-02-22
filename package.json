@@ -1,6 +1,6 @@
 {
   "name": "electron-update-app",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "main.js",
   "license": "MIT",
   "author": "Abdukuddus",
@@ -22,7 +22,7 @@
       "provider": "github",
       "owner": "Abduquddus1998",
       "repo": "electron-update",
-      "token": "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"
+      "token": "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"
     }]
   },
   "scripts": {
