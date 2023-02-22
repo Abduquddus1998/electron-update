@@ -1,7 +1,13 @@
 const { app, BrowserWindow, ipcMain, dialog} = require('electron');
 const { autoUpdater } = require('electron-updater');
-
+const log = require('electron-log');
 let mainWindow;
+
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
+
 
 function createWindow () {
     mainWindow = new BrowserWindow({
@@ -16,6 +22,7 @@ function createWindow () {
         mainWindow = null;
     });
 
+    log.info('main window created annd checking for update');
     autoUpdater.checkForUpdates();
 
     mainWindow.webContents.on('did-finish-load', () => {
@@ -26,6 +33,11 @@ function createWindow () {
 app.on('ready', () => {
     createWindow();
 });
+
+function sendStatusToWindow(text) {
+    log.info(text);
+    mainWindow.webContents.send('message', text);
+}
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
@@ -44,6 +56,9 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
+    log.info('update-available listener', releaseNotes, releaseName, _event);
+    sendStatusToWindow('Update available. sendStatusToWindow');
+
     mainWindow.webContents.send('update_available');
     const dialogOpts = {
         type: 'info',
@@ -55,7 +70,17 @@ autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
     dialog.showMessageBox(dialogOpts);
 });
 
-autoUpdater.on('update-downloaded', () => {
+autoUpdater.on('download-progress', (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+    sendStatusToWindow(log_message);
+})
+
+autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
+    log.info('update-downloaded', releaseNotes, releaseName, _event);
+    sendStatusToWindow('Update downloaded sendStatusToWindow');
+
     mainWindow.webContents.send('update_downloaded');
     const dialogOpts = {
         type: 'info',
@@ -67,7 +92,9 @@ autoUpdater.on('update-downloaded', () => {
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        log.info('update-downloaded showMessageBox', returnValue, releaseNotes, releaseName, _event);
         autoUpdater.quitAndInstall()
+
         if (returnValue.response === 0) {
             console.log('return value', returnValue);
         }
