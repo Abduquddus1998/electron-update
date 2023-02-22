@@ -1,7 +1,8 @@
 {
   "name": "electron-update-app",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "main.js",
+  "description": "electron-updater example project",
   "license": "MIT",
   "author": "Abdukuddus",
   "devDependencies": {
@@ -10,7 +11,6 @@
   },
   "dependencies": {
     "electron-log": "^5.0.0-beta.16",
-    "electron-notarize": "^1.2.2",
     "electron-updater": "^5.3.0"
   },
   "repository": {
@@ -18,12 +18,14 @@
     "url": "https://github.com/Abduquddus1998/electron-update.git"
   },
   "build": {
-    "publish": [{
-      "provider": "github",
-      "owner": "Abduquddus1998",
-      "repo": "electron-update",
-      "token": "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"
-    }]
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Abduquddus1998",
+        "repo": "electron-update",
+        "token": "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"
+      }
+    ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
