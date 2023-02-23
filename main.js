@@ -12,8 +12,6 @@ function createWindow () {
         },
     });
     mainWindow.loadFile('index.html');
-
-    // autoUpdater.checkForUpdates();
 }
 
 app.whenReady().then(() => {
