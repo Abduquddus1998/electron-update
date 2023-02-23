@@ -43,21 +43,6 @@ autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
     dialog.showMessageBox(dialogOpts);
 });
 
-// autoUpdater.on('download-progress', (progressObj) => {
-//     let log_message = "Download speed: " + progressObj.bytesPerSecond;
-//     log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-//     log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-//
-//     const dialogOpts = {
-//         type: 'info',
-//         buttons: ['Ok'],
-//         title: 'download-progress',
-//         message: "message",
-//         detail: log_message
-//     };
-//
-//     dialog.showMessageBox(dialogOpts);
-// })
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     autoUpdater.quitAndInstall()
@@ -76,4 +61,16 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 
     })
 })
+
+autoUpdater.on("update-not-available", (_event) => {
+    const dialogOpts = {
+        type: 'info',
+        buttons: ['Ok'],
+        title: `Update Not available for ${autoUpdater.channel}`,
+        message: "A message!",
+        detail: `Update Not available for ${autoUpdater.channel}`
+    };
+
+    dialog.showMessageBox(dialogOpts);
+});
 
