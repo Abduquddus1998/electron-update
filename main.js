@@ -13,7 +13,7 @@ function createWindow () {
     });
     mainWindow.loadFile('index.html');
 
-    autoUpdater.checkForUpdates();
+    // autoUpdater.checkForUpdates();
 }
 
 app.whenReady().then(() => {
@@ -28,9 +28,9 @@ app.on('window-all-closed', function () {
     }
 });
 
-app.on('activate', function () {
-    if (mainWindow === null) {
-        createWindow();
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow()
     }
 });
 
@@ -62,6 +62,8 @@ autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
 // })
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    autoUpdater.quitAndInstall()
+
     const dialogOpts = {
         type: 'info',
         buttons: ['Restart', 'Later'],
@@ -73,7 +75,7 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
         console.log("returnValue", returnValue)
-        autoUpdater.quitAndInstall()
+
     })
 })
 
